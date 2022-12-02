@@ -205,63 +205,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>espn <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Documents/SPMC 350/blog/posts/jets-playoff-hopes/espn_data/standings.csv"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>standings <span class="ot">&lt;-</span> espn <span class="sc">%&gt;%</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Tm) <span class="sc">%&gt;%</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Tm, W, L, Position, Reason) <span class="sc">%&gt;%</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(W)) <span class="sc">%&gt;%</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>standings <span class="sc">%&gt;%</span> </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Tm =</span> <span class="st">"Team"</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sub_missing</span>(</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">everything</span>(), </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">missing_text =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Current standings in the AFC (Week 12)"</span>,</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"The Jets have control over the final Wild Card spot after a Week 12 win"</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">align =</span> <span class="st">"center"</span>),</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"title"</span>)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tab_style</span>(</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">align =</span> <span class="st">"center"</span>),</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"subtitle"</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"By: Jack Coil |  Source: Pro Football Reference"</span>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>     <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">everything</span>()),</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>     <span class="at">style =</span> <span class="fu">list</span>(</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_borders</span>(<span class="at">sides =</span> <span class="st">"bottom"</span>, <span class="at">weight =</span> <span class="fu">px</span>(<span class="dv">3</span>)),</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">size=</span><span class="dv">12</span>)</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>     )</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_table_lines</span>(<span class="st">"none"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">list</span>(</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"black"</span>),</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"white"</span>)</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_body</span>(</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">rows =</span> Tm <span class="sc">==</span> <span class="st">"New York Jets"</span>)</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggalt)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>espn <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Documents/SPMC 350/blog/posts/jets-playoff-hopes/espn_data/standings.csv"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>standings <span class="ot">&lt;-</span> espn <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Tm) <span class="sc">%&gt;%</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Tm, W, L, Position, Reason) <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(W)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>standings <span class="sc">%&gt;%</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">Tm =</span> <span class="st">"Team"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sub_missing</span>(</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">everything</span>(), </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">missing_text =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Current standings in the AFC (Week 12)"</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"The Jets have control over the final Wild Card spot after a Week 12 win."</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"title"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> <span class="fu">tab_style</span>(</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">align =</span> <span class="st">"left"</span>),</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_title</span>(<span class="st">"subtitle"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_source_note</span>(</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"By: Jack Coil |  Source: Pro Football Reference"</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>     <span class="at">locations =</span> <span class="fu">cells_column_labels</span>(<span class="at">columns =</span> <span class="fu">everything</span>()),</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>     <span class="at">style =</span> <span class="fu">list</span>(</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_borders</span>(<span class="at">sides =</span> <span class="st">"bottom"</span>, <span class="at">weight =</span> <span class="fu">px</span>(<span class="dv">3</span>)),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>       <span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>, <span class="at">size=</span><span class="dv">12</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_table_lines</span>(<span class="st">"none"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">list</span>(</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"black"</span>),</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"white"</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">locations =</span> <span class="fu">cells_body</span>(</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>      <span class="at">rows =</span> Tm <span class="sc">==</span> <span class="st">"New York Jets"</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
-<div id="chwwqtbdlv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="chepqhxwxf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#chwwqtbdlv .gt_table {
+#chepqhxwxf .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -286,7 +287,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#chwwqtbdlv .gt_heading {
+#chepqhxwxf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -298,12 +299,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#chwwqtbdlv .gt_caption {
+#chepqhxwxf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#chwwqtbdlv .gt_title {
+#chepqhxwxf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -315,7 +316,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#chwwqtbdlv .gt_subtitle {
+#chepqhxwxf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -327,13 +328,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#chwwqtbdlv .gt_bottom_border {
+#chepqhxwxf .gt_bottom_border {
   border-bottom-style: none;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#chwwqtbdlv .gt_col_headings {
+#chepqhxwxf .gt_col_headings {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -348,7 +349,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#chwwqtbdlv .gt_col_heading {
+#chepqhxwxf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -368,7 +369,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#chwwqtbdlv .gt_column_spanner_outer {
+#chepqhxwxf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -380,15 +381,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#chwwqtbdlv .gt_column_spanner_outer:first-child {
+#chepqhxwxf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#chwwqtbdlv .gt_column_spanner_outer:last-child {
+#chepqhxwxf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#chwwqtbdlv .gt_column_spanner {
+#chepqhxwxf .gt_column_spanner {
   border-bottom-style: none;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -400,7 +401,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#chwwqtbdlv .gt_group_heading {
+#chepqhxwxf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -426,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-#chwwqtbdlv .gt_empty_group_heading {
+#chepqhxwxf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -441,15 +442,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#chwwqtbdlv .gt_from_md > :first-child {
+#chepqhxwxf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#chwwqtbdlv .gt_from_md > :last-child {
+#chepqhxwxf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#chwwqtbdlv .gt_row {
+#chepqhxwxf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -468,7 +469,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#chwwqtbdlv .gt_stub {
+#chepqhxwxf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -481,7 +482,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#chwwqtbdlv .gt_stub_row_group {
+#chepqhxwxf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -495,11 +496,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#chwwqtbdlv .gt_row_group_first td {
+#chepqhxwxf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#chwwqtbdlv .gt_summary_row {
+#chepqhxwxf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -509,16 +510,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#chwwqtbdlv .gt_first_summary_row {
+#chepqhxwxf .gt_first_summary_row {
   border-top-style: none;
   border-top-color: #D3D3D3;
 }
 
-#chwwqtbdlv .gt_first_summary_row.thick {
+#chepqhxwxf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#chwwqtbdlv .gt_last_summary_row {
+#chepqhxwxf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -528,7 +529,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#chwwqtbdlv .gt_grand_summary_row {
+#chepqhxwxf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -538,7 +539,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#chwwqtbdlv .gt_first_grand_summary_row {
+#chepqhxwxf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -548,11 +549,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#chwwqtbdlv .gt_striped {
+#chepqhxwxf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#chwwqtbdlv .gt_table_body {
+#chepqhxwxf .gt_table_body {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -561,7 +562,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#chwwqtbdlv .gt_footnotes {
+#chepqhxwxf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -575,7 +576,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#chwwqtbdlv .gt_footnote {
+#chepqhxwxf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -584,7 +585,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#chwwqtbdlv .gt_sourcenotes {
+#chepqhxwxf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -598,7 +599,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#chwwqtbdlv .gt_sourcenote {
+#chepqhxwxf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -606,74 +607,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#chwwqtbdlv .gt_left {
+#chepqhxwxf .gt_left {
   text-align: left;
 }
 
-#chwwqtbdlv .gt_center {
+#chepqhxwxf .gt_center {
   text-align: center;
 }
 
-#chwwqtbdlv .gt_right {
+#chepqhxwxf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#chwwqtbdlv .gt_font_normal {
+#chepqhxwxf .gt_font_normal {
   font-weight: normal;
 }
 
-#chwwqtbdlv .gt_font_bold {
+#chepqhxwxf .gt_font_bold {
   font-weight: bold;
 }
 
-#chwwqtbdlv .gt_font_italic {
+#chepqhxwxf .gt_font_italic {
   font-style: italic;
 }
 
-#chwwqtbdlv .gt_super {
+#chepqhxwxf .gt_super {
   font-size: 65%;
 }
 
-#chwwqtbdlv .gt_footnote_marks {
+#chepqhxwxf .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#chwwqtbdlv .gt_asterisk {
+#chepqhxwxf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#chwwqtbdlv .gt_indent_1 {
+#chepqhxwxf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#chwwqtbdlv .gt_indent_2 {
+#chepqhxwxf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#chwwqtbdlv .gt_indent_3 {
+#chepqhxwxf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#chwwqtbdlv .gt_indent_4 {
+#chepqhxwxf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#chwwqtbdlv .gt_indent_5 {
+#chepqhxwxf .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="gt_table">
   <thead class="gt_header">
     <tr>
-      <td colspan="5" class="gt_heading gt_title gt_font_normal" style="color: #000000; text-align: center; font-weight: bold;">Current standings in the AFC (Week 12)</td>
+      <td colspan="5" class="gt_heading gt_title gt_font_normal" style="color: #000000; text-align: left; font-weight: bold;">Current standings in the AFC (Week 12)</td>
     </tr>
     <tr>
-      <td colspan="5" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="color: #000000; text-align: center;">The Jets have control over the final Wild Card spot after a Week 12 win</td>
+      <td colspan="5" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="color: #000000; text-align: left;">The Jets have control over the final Wild Card spot after a Week 12 win.</td>
     </tr>
   </thead>
   <thead class="gt_col_headings">
@@ -777,159 +778,122 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>The Jets are currently in the last Wild Card spot but the Patriots have the head-to-head match up advantage.</p>
+<p>The Jets are currently in the last Wild Card spot but the Patriots have the head-to-head match up advantage with teams like the Chargers still not out of the hunt.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>power <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Documents/SPMC 350/blog/posts/jets-playoff-hopes/espn_data/rating.csv"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>jets <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"NYJ"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>bills <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"BUF"</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>ben <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"CIN"</span>)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>mia <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"MIA"</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>kc <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"KC"</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>bal <span class="ot">&lt;-</span> power<span class="sc">%&gt;%</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"BAL"</span>)</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>ten <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"TEN"</span>)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>power, <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>)) <span class="sc">+</span> </span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>jets, <span class="at">label =</span> <span class="st">"NYJ"</span>,</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>, <span class="at">size=</span><span class="st">""</span>), </span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>bills, <span class="at">label =</span> <span class="st">"BUF"</span>,</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>, <span class="at">size=</span><span class="st">""</span>), </span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>ben, <span class="at">label =</span> <span class="st">"CIN"</span>,</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>, <span class="at">size=</span><span class="st">""</span>), </span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>mia, <span class="at">label =</span> <span class="st">"MIA"</span>,</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>, <span class="at">size=</span><span class="st">""</span>), </span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>kc, <span class="at">label =</span> <span class="st">"KC"</span>,</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>, <span class="at">size=</span><span class="st">""</span>), </span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>bal, <span class="at">label =</span> <span class="st">"BAL"</span>,</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>, <span class="at">size=</span><span class="st">""</span>), </span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>ten, <span class="at">label =</span> <span class="st">"TEN"</span>,</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>, <span class="at">size=</span><span class="st">""</span>), </span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">9</span>, <span class="at">y=</span><span class="dv">6</span>, <span class="at">label=</span><span class="st">"Good FPI</span><span class="sc">\n</span><span class="st">Strong SOS"</span>), <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">9</span>, <span class="at">y=</span><span class="dv">30</span>, <span class="at">label=</span><span class="st">"Bad FPI</span><span class="sc">\n</span><span class="st">Weak SOS"</span>), <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>power, </span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>, <span class="at">label=</span>Team)) <span class="sc">+</span></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Football Power Index (FPI)"</span>,</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"SOS Remaining"</span>,</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data: ESPN | By: Jack Coil"</span>,</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Using the Power Index and REM SOS to show how teams might fare in the final weeks"</span>,</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"The Jets at 7-4 have the lowest FPI of all playoff teams but an easier remaining SOS than most of the AFC."</span>,</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"New York Jets"</span></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>power <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Documents/SPMC 350/blog/posts/jets-playoff-hopes/espn_data/rating.csv"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>jets <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"NYJ"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>bills <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"BUF"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ben <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"CIN"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>mia <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"MIA"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>kc <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"KC"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>bal <span class="ot">&lt;-</span> power<span class="sc">%&gt;%</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"BAL"</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>ten <span class="ot">&lt;-</span> power <span class="sc">%&gt;%</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Team <span class="sc">==</span> <span class="st">"TEN"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>power, <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>)) <span class="sc">+</span> </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>jets, <span class="at">label =</span> <span class="st">"NYJ"</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>), </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>bills, <span class="at">label =</span> <span class="st">"BUF"</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>), </span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>ben, <span class="at">label =</span> <span class="st">"CIN"</span>,</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>), </span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>mia, <span class="at">label =</span> <span class="st">"MIA"</span>,</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>), </span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>kc, <span class="at">label =</span> <span class="st">"KC"</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>), </span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>bal, <span class="at">label =</span> <span class="st">"BAL"</span>,</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>), </span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>ten, <span class="at">label =</span> <span class="st">"TEN"</span>,</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>), </span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">9</span>, <span class="at">y=</span><span class="dv">6</span>, <span class="at">label=</span><span class="st">"Good FPI</span><span class="sc">\n</span><span class="st">Strong SOS"</span>), <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="sc">-</span><span class="dv">9</span>, <span class="at">y=</span><span class="dv">30</span>, <span class="at">label=</span><span class="st">"Bad FPI</span><span class="sc">\n</span><span class="st">Weak SOS"</span>), <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>power, </span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>FPI, <span class="at">y=</span><span class="st">`</span><span class="at">REM SOS</span><span class="st">`</span>, <span class="at">label=</span>Team)) <span class="sc">+</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Football Power Index (FPI)"</span>,</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"SOS Remaining"</span>,</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data: ESPN | By: Jack Coil"</span>,</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Using Power Index and REM SOS to show how teams might fare in the final weeks"</span>,</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"The Jets at 7-4 have the lowest FPI of all playoff teams but an easier remaining SOS than most of the AFC."</span>,</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"New York Jets"</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">hjust =</span> <span class="dv">0</span>)</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>While the Jets have the weakest FPI of all AFC playoff teams they have the easiest road remaining which could potentially put them in position to take over Wild Card spots like the Bengals who are playing better football than earlier in the year. New England has the hardest SOS remaining but only have to tie the Jets records to make the playoffs.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>projections <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Documents/SPMC 350/blog/posts/jets-playoff-hopes/espn_data/projections.csv"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dumbbell</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>projections, <span class="fu">aes</span>(<span class="at">y=</span><span class="fu">reorder</span>(TEAM, wins), <span class="at">x=</span>wins, <span class="at">xend=</span>loss),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"grey"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_x =</span> <span class="st">"blue"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_xend =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Projected Wins (Blue) &amp; Losses (Red)"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data: ESPN | By: Jack Coil"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Comparing projected wins and losses of team in the AFC"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"The Jets are projected 9.1 wins, making it tough for them to clinch a Wild Card spot."</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">hjust =</span> <span class="dv">0</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_reverse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Registered S3 methods overwritten by 'ggalt':
-  method                  from   
-  grid.draw.absoluteGrob  ggplot2
-  grobHeight.absoluteGrob ggplot2
-  grobWidth.absoluteGrob  ggplot2
-  grobX.absoluteGrob      ggplot2
-  grobY.absoluteGrob      ggplot2</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>projections <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/Documents/SPMC 350/blog/posts/jets-playoff-hopes/espn_data/projections.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 16 Columns: 3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (1): TEAM
-dbl (2): wins, loss
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dumbbell</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>projections, </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y=</span><span class="fu">reorder</span>(TEAM, wins), <span class="at">x=</span>wins, <span class="at">xend=</span>loss),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"grey"</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_x =</span> <span class="st">"blue"</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour_xend =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using the `size` aesthietic with geom_segment was deprecated in ggplot2 3.4.0.
-ℹ Please use the `linewidth` aesthetic instead.</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Projected Wins (Blue) &amp; Losses (Red)"</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Data: ESPN | By: Jack Coil"</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Comparing projected wins and losses of team in the AFC"</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"The Jets are projected 9.1 wins, making it tough for them to clinch a Wild Card spot."</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>NULL</code></pre>
 </div>
-</div>
+<p>With the Jets projected to win 9.1 games this puts them in the final AFC Wild Card spot. A big win could set the Jets up in good position but a bad loss could cost them a chance at the post season. The Jets are in control of their own destiny but still have divisional games with the Dolphins and Bills not making it easy as well as a match up in Minnesota vs the Vikings in Week 13.</p>
 
 
 
